@@ -29,11 +29,30 @@ export default {
           },
         ],
       },
+      {
+        test: /\.(jpg|png|gif|svg|ico|mov|mp4|glb)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+              outputPath: (url) => {
+                return path.relative('src', url);
+              },
+              publicPath: (url) => {
+                return './' + path.relative('src', url).replace(/\\/g, '/');
+              },
+              emitFile: true,
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
     alias: {
       '~': path.resolve(__dirname, './src/scripts/'),
+      '~models': path.resolve(__dirname, './src/models/'),
     },
     extensions: ['.ts', '.js'],
   },
